@@ -93,9 +93,9 @@ tu = index.parse(sys.argv[1],args)
 print ('Translation unit:', tu.spelling.decode("utf-8"))
 infile_str=os.path.splitext(os.path.basename(sys.argv[1]))[0]
 print (infile_str)
-provfilename = 'flowdoc/aux_files/'+infile_str+'_provisional.flowdb'
-origfilename = 'flowdoc/aux_files/'+infile_str+'.flowdb' 
-writefunc = open('flowdoc/aux_files/'+infile_str+'_provisional.flowdb',"w")
+provfilename = os.path.join('flowdoc/aux_files/',infile_str+'_provisional.flowdb')
+origfilename = os.path.join('flowdoc/aux_files/',infile_str+'.flowdb')
+writefunc = open(provfilename,"w")
 find_functions(tu.cursor)
 writefunc.close()
 # check whether the name of the provisional file has to be changed into origfilename 
