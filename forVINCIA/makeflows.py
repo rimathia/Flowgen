@@ -775,9 +775,9 @@ print ('Translation unit:', tu.spelling.decode("utf-8"))
 #global variable for the name of the input file. It will be defined later on.
 infile_str=''
 find_functions(tu.cursor)
-#create .processed file so that make knows this source code file has been processed
+#touch an empty file so that make knows this source code file has been processed
 prcfilename = sys.argv[1]
-prcfilename = os.path.join("flowdoc/aux_files", os.path.splitext(os.path.basename(prcfilename))[0]+".processed")
+prcfilename = os.path.join("flowdoc/aux_files", os.path.splitext(os.path.basename(prcfilename))[0]+".mfdone")
 with open(prcfilename, 'a'):
         os.utime(prcfilename, None)
 #print(os.path.splitext(infile_str)[0])

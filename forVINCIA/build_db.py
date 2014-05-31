@@ -3,6 +3,7 @@ import re
 import sys
 import clang.cindex
 import os
+import filecmp
 
 #clang node types (CursorKind)
 #21: CXX_METHOD
@@ -92,6 +93,13 @@ tu = index.parse(sys.argv[1],args)
 print ('Translation unit:', tu.spelling.decode("utf-8"))
 infile_str=os.path.splitext(os.path.basename(sys.argv[1]))[0]
 print (infile_str)
-writefunc = open('flowdoc/aux_files/'+infile_str+'.flowdb',"w")
+provfilename = 'flowdoc/aux_files/'+infile_str+'_provisional.flowdb'
+origfilename = 'flowdoc/aux_files/'+infile_str+'.flowdb' 
+writefunc = open('flowdoc/aux_files/'+infile_str+'_provisional.flowdb',"w")
 find_functions(tu.cursor)
 writefunc.close()
+# check whether the name of the provisional file has to be changed into origfilename 
+if (not(os.path.isfile(origfilename)) or (os.path.isfile(origfilename) and not filecmp.cmp(origfilename, provfilename, shallow=False))):
+	os.rename(provfilename, origfilename)
+else:
+	os.remove(provfilename)
